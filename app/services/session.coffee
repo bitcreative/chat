@@ -8,7 +8,7 @@ Session = Ember.Object.extend
     setupAuth: Ember.computed 'firebase', ->
         firebase = @get 'firebase'
         if firebase
-            @set 'firebaseAuth', new FirebaseSimpleLogin firebase, _.bind(@handleAuthenticationChange, @)
+            @firebaseAuth = new FirebaseSimpleLogin firebase, _.bind(@handleAuthenticationChange, @)
 
     authenticated: Ember.computed 'user', ->
         !!@get 'user'
@@ -17,9 +17,17 @@ Session = Ember.Object.extend
         Ember.Logger.info "Auth change: ", user, error
         @set 'user', user
         if @authPromise
+            promise = @authPromise
+            @authPromise = null
+
             if error
-                @authPromise.reject error
+                promise.reject error
             else
-                @authPromise.resolve user
+                promise.resolve user
+
+    login: (email, password) ->
+        @authPromise ?= Ember.RSVP.defer()
+        @firebaseAuth.login 'password', { email, password }
+        @authPromise.promise
 
 `export default Session`

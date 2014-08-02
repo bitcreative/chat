@@ -9,6 +9,7 @@ SessionInitializer = {
             initialize: true
 
         app.inject 'route', 'session', 'service:session'
+        app.inject 'controller', 'session', 'service:session'
 }
 
 `export default SessionInitializer`
