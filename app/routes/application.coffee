@@ -5,4 +5,8 @@ ApplicationRoute = Ember.Route.extend
         if not @session.get 'authenticated'
             @transitionTo 'login'
 
+    watchForLogout: Ember.computed 'session.authenticated', ->
+        if not @session.get 'authenticated'
+            @transitionTo 'login'
+
 `export default ApplicationRoute`
