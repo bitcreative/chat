@@ -2,8 +2,13 @@
 
 LoginController = Ember.Controller.extend
     loginError: false
+    modalOpen: false
 
     action:
+        openModal: ->
+            @set 'modalOpen', true
+            return
+
         login: ->
             @set 'loginError', false
 
@@ -18,5 +23,6 @@ LoginController = Ember.Controller.extend
                         @transitionToRoute 'index'
                     .catch =>
                         @set 'loginError', true
+
 
 `export default LoginController`
