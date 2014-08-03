@@ -1,0 +1,119 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/dashboard">Simply Kanban</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="navigation-pages nav navbar-nav">
+                {{#each page in navigationPages}}
+                    <li {{bind-attr class="page.active"}}>
+                        {{#if page.dynamic}}
+                            {{#link-to page.route page.model}}{{page.display}}{{/link-to}}
+                        {{else}}
+                            {{#link-to page.route}}{{page.display}}{{/link-to}}
+                        {{/if}}
+                    </li>
+                {{/each}}
+            </ul>
+
+            {{#if session.authenticated}}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome <strong>{{session.user.username}}</strong><span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#/account">Manage Account</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" {{action "logout"}}>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            {{else}}
+                <form {{bind-attr class=":navbar-form :navbar-right loginError:has-error"}} {{action "login" on="submit"}}>
+                    <div class="form-group">
+                        {{input type="text" class="form-control" placeholder="username" value=loginUsername tabindex="1"}}
+                    </div>
+                    <div class="form-group">
+                        {{input type="password" class="form-control" placeholder="password" value=loginPassword tabindex="2"}}
+                    </div>
+                    <button type="submit" class="btn btn-primary" tabindex="3">Login</button>
+                    <button type="button" class="btn btn-link" tabindex="4" {{action "openRegistrationModal"}}>
+                        Sign Up
+                    </button>
+                </form>
+            {{/if}}
+        </div>
+    </div>
+</nav>
+
+<div {{bind-attr class=":register-modal modalOpen::hidden"}}>
+    <div class="row">
+        <div class="registration-form col-md-offset-3 col-md-6">
+            <h1>
+                <small>Register</small>
+            </h1>
+
+            <form class="form-horizontal" {{action "register" on="submit"}}>
+
+                {{#if registrationError}}
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger" role="alert">
+                                {{{registrationError}}}
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
+
+                <div {{bind-attr class=":form-group usernameError:has-error usernameError:has-feedback"}}>
+                    <label for="signup-username" class="col-sm-5 control-label">Username</label>
+
+                    <div class="col-sm-7">
+                        {{input type="text" class="form-control first-input" id="signup-username" placeholder="username" value=registrationUsername}}
+                        {{#if usernameError}}
+                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        {{/if}}
+                    </div>
+                </div>
+
+                <div {{bind-attr class=":form-group passwordWarning:has-warning passwordError:has-error hasFeedback"}}>
+                    <label for="signup-password" class="col-sm-5 control-label">Password</label>
+
+                    <div class="col-sm-7">
+                        {{input type="password" class="form-control" id="signup-password" placeholder="password" value=registrationPassword}}
+                        {{#if passwordWarning}}
+                            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                        {{/if}}
+                    </div>
+                </div>
+
+                <div {{bind-attr class=":form-group passwordWarning:has-warning passwordError:has-error hasFeedback"}}>
+                    <label for="signup-password-repeat" class="col-sm-5 control-label">Re-enter Password</label>
+
+                    <div class="col-sm-7">
+                        {{input type="password" class="form-control" id="signup-password-repeat" placeholder="re-enter password" value=passwordRepeat}}
+                        {{#if passwordWarning}}
+                            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                        {{/if}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-5 col-sm-7">
+                        <button type="submit" class="btn btn-default">Sign Up</button>
+                        <button type="button" class="btn btn-link" {{action "closeRegistrationModal"}}>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
