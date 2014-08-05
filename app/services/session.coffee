@@ -4,7 +4,7 @@ Session = Ember.Object.extend
 
     user: null
     authPromise: null
-    
+
     setupAuth: Ember.observer 'firebase', ->
         firebase = @get 'firebase'
         if firebase
