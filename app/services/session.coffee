@@ -30,4 +30,17 @@ Session = Ember.Object.extend
         @firebaseAuth.login 'password', { email, password }
         @authPromise.promise
 
+    register: (email, password) ->
+        @authPromise ?= Ember.RSVP.defer()
+        @firebaseAuth.createUser email, password, (error, user) =>
+            if error
+                promise = @authPromise
+                @authPromise = null
+                promise.reject error
+
+            else
+                @login email, password
+
+        @authPromise.promise
+
 `export default Session`

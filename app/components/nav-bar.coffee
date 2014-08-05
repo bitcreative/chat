@@ -75,18 +75,26 @@ NavBarComponent = Ember.Component.extend
                 @set 'registrationError', "<strong>Error!</strong> Password fields don't match"
                 return
 
-            @session.register(username, password).then ({authenticated, status}) =>
-                if authenticated
+            @session.register username, password
+                .then (user) =>
                     @set 'modalOpen', false
-                    @triggerAction action: 'loggedIn'
-                else
+                    @sendAction 'loggedIn'
+
+                .catch (error) =>
                     @set 'usernameError', true
-                    error = switch status
-                        when 400 then "<strong>Error!</strong> All fields are required"
-                        when 409 then "Username is already in use"
-                        when 500 then "Couldn't create user for username"
-                        else "Registration failed"
                     @set 'registrationError', error
+
+#                if authenticated
+#                    @set 'modalOpen', false
+#                    @triggerAction action: 'loggedIn'
+#                else
+#                    @set 'usernameError', true
+#                    error = switch status
+#                        when 400 then "<strong>Error!</strong> All fields are required"
+#                        when 409 then "Username is already in use"
+#                        when 500 then "Couldn't create user for username"
+#                        else "Registration failed"
+#                    @set 'registrationError', error
 
         openRegistrationModal: ->
             @set 'modalOpen', true
