@@ -14,16 +14,13 @@ Session = Ember.Object.extend
         !!@get 'user'
 
     handleAuthenticationChange: (error, user) ->
-        Ember.Logger.info "Auth change: ", user, error
         @set 'user', user
-        if @authPromise
-            promise = @authPromise
-            @authPromise = null
+        promise = @clearPromise()
+        if error
+            promise.reject error
 
-            if error
-                promise.reject error
-            else
-                promise.resolve user
+        else
+            promise.resolve user
 
     login: (email, password) ->
         @authPromise ?= Ember.RSVP.defer()
@@ -34,13 +31,24 @@ Session = Ember.Object.extend
         @authPromise ?= Ember.RSVP.defer()
         @firebaseAuth.createUser email, password, (error, user) =>
             if error
-                promise = @authPromise
-                @authPromise = null
-                promise.reject error
+                @clearPromise().reject error
 
             else
                 @login email, password
 
         @authPromise.promise
+
+    logout: ->
+        @firebaseAuth.logout()
+        @clearPromise.reject "Logged Out"
+
+    clearPromise: ->
+        promise = @authPromise
+        @authPromise = null
+
+        promise or {
+            resolve: -> null
+            reject: -> null
+        }
 
 `export default Session`
