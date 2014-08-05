@@ -6,6 +6,7 @@ User = DS.Model.extend
     lastName: DS.attr()
     email: DS.attr()
 
-    messages: DS.hasMany 'messages'
+    organization: DS.belongsTo 'organization'
+    messages: DS.hasMany 'messages', async: true
 
 `export default User`
