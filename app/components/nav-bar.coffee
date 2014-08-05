@@ -1,39 +1,9 @@
 `import Ember from 'ember'`
 
-pages = [
-#    {route: 'about', display: 'about'}
-#    {route: 'dashboard', display: 'dashboard', auth: true}
-#    {route: 'card.board', display: 'kanban', dynamic: true, auth: true}
-#    {route: 'card.plan', display: 'planning', dynamic: true, auth: true}
-]
-
 NavBarComponent = Ember.Component.extend
-    activePage: null
     authenticatedBinding: 'session.authenticated'
-    lastCardBinding: 'session.lastCard'
-
-    navigationPages: Ember.computed 'activePage', 'authenticated', 'lastCard', ->
-        authenticated = @get 'authenticated'
-        active = @get 'activePage'
-        lastCard = @get 'lastCard'
-
-        descriptions = _.collect pages, (page) ->
-            if page.auth and not authenticated
-                false
-            else if page.dynamic and not lastCard
-                false
-            else
-                active: page.route is active
-                display: page.display
-                dynamic: page.dynamic
-                route: page.route
-                model: if page.dynamic then lastCard else null
-
-        _.filter descriptions, (page) ->
-            page
 
     loginError: false
-
     passwordError: null
     usernameError: null
 
@@ -45,22 +15,36 @@ NavBarComponent = Ember.Component.extend
     hasFeedback: Ember.computed 'passwordWarning', 'passwordError', ->
         @get('passwordWarning') or @get('passwordError')
 
+    focusFirstInput: ->
+        @$('.first-input').focus()
+
     actions:
+        openRegistrationModal: ->
+            @set 'modalOpen', true
+            Ember.run.scheduleOnce 'afterRender', @, @focusFirstInput
+
+        closeRegistrationModal: ->
+            @set 'modalOpen', false
+
         login: ->
             @set 'loginError', false
             username = @get 'loginUsername'
             password = @get 'loginPassword'
-            @session.login(username, password).then ({authenticated}) =>
-                if not authenticated
-                    @set 'loginError', true
-                else
+
+            @session.login username, password
+                .then (user) =>
                     @set 'loginUsername', ''
                     @set 'loginPassword', ''
-                    @triggerAction action: 'loggedIn'
+                    @sendAction 'loggedIn'
+
+                .catch (error) =>
+                    @set 'loginError', true
             return
 
         logout: ->
             @session.logout()
+            @sendAction 'loggedOut'
+            return
 
         register: ->
             @set 'passwordError', null
@@ -83,27 +67,6 @@ NavBarComponent = Ember.Component.extend
                 .catch (error) =>
                     @set 'usernameError', true
                     @set 'registrationError', error
-
-#                if authenticated
-#                    @set 'modalOpen', false
-#                    @triggerAction action: 'loggedIn'
-#                else
-#                    @set 'usernameError', true
-#                    error = switch status
-#                        when 400 then "<strong>Error!</strong> All fields are required"
-#                        when 409 then "Username is already in use"
-#                        when 500 then "Couldn't create user for username"
-#                        else "Registration failed"
-#                    @set 'registrationError', error
-
-        openRegistrationModal: ->
-            @set 'modalOpen', true
-            Ember.run.scheduleOnce 'afterRender', @, @focusFirstInput
-
-        closeRegistrationModal: ->
-            @set 'modalOpen', false
-
-    focusFirstInput: ->
-        @$('.first-input').focus()
+            return
 
 `export default NavBarComponent`

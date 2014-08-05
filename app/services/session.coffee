@@ -4,8 +4,8 @@ Session = Ember.Object.extend
 
     user: null
     authPromise: null
-
-    setupAuth: Ember.computed 'firebase', ->
+    
+    setupAuth: Ember.observer 'firebase', ->
         firebase = @get 'firebase'
         if firebase
             @firebaseAuth = new FirebaseSimpleLogin firebase, _.bind(@handleAuthenticationChange, @)
