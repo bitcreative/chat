@@ -5,13 +5,13 @@ Session = Ember.Object.extend
     user: null
     authPromise: null
 
+    authenticated: Ember.computed 'user', ->
+        !!@get 'user'
+
     setupAuth: Ember.observer 'firebase', ->
         firebase = @get 'firebase'
         if firebase
             @firebaseAuth = new FirebaseSimpleLogin firebase, _.bind(@handleAuthenticationChange, @)
-
-    authenticated: Ember.computed 'user', ->
-        !!@get 'user'
 
     handleAuthenticationChange: (error, user) ->
         @set 'user', user
