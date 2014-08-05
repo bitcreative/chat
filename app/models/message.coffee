@@ -4,3 +4,5 @@ Message = DS.Model.extend
 
     text: DS.attr()
     timestamp: DS.attr()
+
+`export default Message`

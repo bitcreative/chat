@@ -4,3 +4,5 @@ User = DS.Model.extend
     email: DS.attr()
 
     messages: DS.hasMany 'messages'
+
+`export default User`
