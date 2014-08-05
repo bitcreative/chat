@@ -48,9 +48,10 @@
                         {{input type="password" class="form-control" placeholder="password" value=loginPassword tabindex="2"}}
                     </div>
                     <button type="submit" class="btn btn-primary" tabindex="3">Login</button>
-                    <button type="button" class="btn btn-link" tabindex="4" {{action "openRegistrationModal"}}>
+
+                    {{#link-to "register" classNames="btn btn-link"}}
                         Sign Up
-                    </button>
+                    {{/link-to}}
                 </form>
             {{/if}}
         </div>

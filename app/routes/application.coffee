@@ -1,11 +1,14 @@
 `import Ember from 'ember'`
 
+unprotectedRoutes = ['register']
+
 ApplicationRoute = Ember.Route.extend
     actions:
         willTransition: (transition) ->
             if not @session.get 'authenticated'
                 @session.set 'previousTransition', transition
-                @transitionTo 'about'
+                if transition.targetName not in unprotectedRoutes
+                    @transitionTo 'about'
 
     beforeModel: (transition) ->
         if not @session.get 'authenticated'
@@ -16,14 +19,14 @@ ApplicationRoute = Ember.Route.extend
 
             if promise
                 promise.then (user) =>
+                    previous = @session.get 'previousTransition'
+                    target = previous?.targetName
                     if user is null
-                        @transitionTo 'about'
+                        target ?= 'about'
                     else
-                        previous = @session.get 'previousTransition'
-                        if previous
-                            previous.retry()
-                        else
-                            @transitionTo 'dashboard'
+                        target ?= 'dashboard'
+
+                    if previous then previous.retry() else @transitionTo target
                 .catch () =>
                     @transitionTo 'about'
 

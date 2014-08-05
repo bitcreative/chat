@@ -8,6 +8,7 @@ Router.map ->
     @route 'about'
     @route 'dashboard'
     @route 'account'
+    @route 'register'
 
     @resource 'room', { path: 'room' }, ->
         @route 'detail', { path: ':room_id' }
