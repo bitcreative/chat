@@ -35,18 +35,19 @@ AccountController = Ember.ObjectController.extend
             @set 'passwordUpdateSucceeded', false
             @set 'passwordUpdateFailed', false
 
-            oldpass = @get 'changePasswordOld'
-            newpass = @get 'changePasswordNew'
-            repeat = @get 'changePasswordRepeat'
+            oldPassword = @get 'changePasswordOld'
+            newPassword = @get 'changePasswordNew'
+            passwordRepeat = @get 'changePasswordRepeat'
 
-            if oldpass and newpass and repeat and newpass is repeat
-                @session.changePassword(oldpass, newpass).then (success) =>
-                    if success
+            if oldPassword and newPassword and passwordRepeat and newPassword is passwordRepeat
+                @session.changePassword oldPassword, newPassword
+                    .then =>
                         @set 'changePasswordOld', ''
                         @set 'changePasswordNew', ''
                         @set 'changePasswordRepeat', ''
                         @set 'passwordUpdateSucceeded', true
-                    else
+
+                    .catch =>
                         @set 'passwordUpdateFailed', true
 
 `export default AccountController`

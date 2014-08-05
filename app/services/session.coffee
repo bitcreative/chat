@@ -40,7 +40,14 @@ Session = Ember.Object.extend
 
     logout: ->
         @firebaseAuth.logout()
-        @clearPromise.reject "Logged Out"
+        @clearPromise().reject "Logged Out"
+
+    changePassword: (oldPassword, newPassword) -> new Ember.RSVP.Promise (resolve, reject) =>
+        @firebaseAuth.changePassword @user?.email, oldPassword, newPassword, (error) ->
+            if error
+                reject error
+            else
+                resolve()
 
     clearPromise: ->
         promise = @authPromise
