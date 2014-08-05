@@ -5,6 +5,8 @@ Session = Ember.Object.extend
     user: null
     authPromise: null
 
+    checkSessionPromise: null
+
     authenticated: Ember.computed 'user', ->
         !!@get 'user'
 
@@ -13,12 +15,16 @@ Session = Ember.Object.extend
         if firebase
             @firebaseAuth = new FirebaseSimpleLogin firebase, _.bind(@handleAuthenticationChange, @)
 
+            @set 'checkSessionPromise', Ember.RSVP.defer()
+
     handleAuthenticationChange: (error, user) ->
         @set 'user', user
-        promise = @clearPromise()
+
+        promise = @get('checkSessionPromise') or @clearPromise()
+        @checkSessionPromise = null
+
         if error
             promise.reject error
-
         else
             promise.resolve user
 

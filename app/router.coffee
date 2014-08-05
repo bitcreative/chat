@@ -9,4 +9,7 @@ Router.map ->
     @route 'dashboard'
     @route 'account'
 
+    @resource 'room', { path: 'room' }, ->
+        @route 'detail', { path: ':room_id' }
+
 `export default Router`
