@@ -27,6 +27,9 @@ RegisterController = Ember.Controller.extend
             user = @get 'user'
             organization = @get 'organization'
 
+            if @get 'buttonDisabled'
+                return
+
             org = @store.createRecord 'organization', organization
 
             @session.register user.email, user.password
