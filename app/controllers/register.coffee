@@ -4,7 +4,6 @@ RegisterController = Ember.Controller.extend
         password: null
         passwordRepeat: null
 
-
     organization:
         name: null
 
@@ -13,11 +12,15 @@ RegisterController = Ember.Controller.extend
         organization = @get 'organization'
 
         missingText = not organization.name or not user.email
-        missingPassword = not user.password?
+        missingPassword = not user.password
         notMatching = user.password isnt user.passwordRepeat
 
-
         return missingText or missingPassword or notMatching
+
+    passwordWarning: Ember.computed 'user.{password,passwordRepeat}', ->
+        password = @get 'user.password'
+        repeat = @get 'user.passwordRepeat'
+        password and repeat and password isnt repeat
 
     actions:
         register: ->
@@ -42,6 +45,5 @@ RegisterController = Ember.Controller.extend
                     # error yo!
 
             return
-
 
 `export default RegisterController`
