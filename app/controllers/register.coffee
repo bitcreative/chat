@@ -23,30 +23,12 @@ RegisterController = Ember.Controller.extend
         password and repeat and password isnt repeat
 
     actions:
-        register: ->
-            user = @get 'user'
-            organization = @get 'organization'
+        submitForm: ->
+            if not @get 'buttonDisabled'
+                email = @get 'user.email'
+                password = @get 'user.password'
+                orgName = @get 'organization.name'
 
-            if @get 'buttonDisabled'
-                return
-
-            org = @store.createRecord 'organization', organization
-
-            @session.register user.email, user.password
-                .then (userData) =>
-                    org.set 'owner', userData.email
-                    org.save()
-                        .then () =>
-                            user = @store.createRecord 'user', userData
-                            user.set 'organization', org
-                            user.setProperties
-                                firstName: ''
-                                lastName: ''
-                            user.save()
-
-                .catch (error) =>
-                    # error yo!
-
-            return
+                @send "register", email, password, orgName
 
 `export default RegisterController`
