@@ -7,6 +7,8 @@ RegisterController = Ember.Controller.extend
     organization:
         name: null
 
+    registrationError: false
+
     buttonDisabled: Ember.computed 'user.{email,password,passwordRepeat}', 'organization.{name}', ->
         user = @get 'user'
         organization = @get 'organization'
@@ -29,6 +31,7 @@ RegisterController = Ember.Controller.extend
                 password = @get 'user.password'
                 orgName = @get 'organization.name'
 
+                @set 'registrationError', false
                 @send "register", email, password, orgName
 
 `export default RegisterController`

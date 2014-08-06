@@ -10,7 +10,7 @@ RegisterRoute = Ember.Route.extend
                             @transitionTo 'dashboard'
 
                 .catch (error) =>
-                    debugger
+                    @controllerFor('register').set 'registrationError', error
 
             return
 

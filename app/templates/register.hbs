@@ -7,6 +7,16 @@
                 </h1>
             </div>
 
+            {{#if registrationError}}
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <div class="alert alert-danger" role="alert">
+                            {{{registrationError}}}
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+
             <div class="form-group">
                 <label class="col-sm-4 control-label">Organization Name</label>
 
