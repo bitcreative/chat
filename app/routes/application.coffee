@@ -1,5 +1,3 @@
-`import Ember from 'ember'`
-
 unprotectedRoutes = ['register']
 
 ApplicationRoute = Ember.Route.extend
@@ -20,23 +18,17 @@ ApplicationRoute = Ember.Route.extend
             if promise
                 promise.then (user) =>
                     previous = @session.get 'previousTransition'
-                    target = previous?.targetName
-                    if user is null
-                        target ?= 'about'
-                    else
-                        target ?= 'dashboard'
+                    target = previous?.targetName or if not user then 'about' else 'dashboard'
 
                     if previous then previous.retry() else @transitionTo target
-                .catch () =>
+
+                promise.catch =>
                     @transitionTo 'about'
 
             promise
 
     watchForLogout: Ember.observer 'session.authenticated', ->
-        if @session.get 'authenticated'
-            previous = @session.get 'previousTransition'
-            @transitionTo 'dashboard'
-        else
+        if not @session.get 'authenticated'
             @transitionTo 'about'
 
 `export default ApplicationRoute`
