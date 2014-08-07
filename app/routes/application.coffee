@@ -10,23 +10,14 @@ ApplicationRoute = Ember.Route.extend
         if not @session.get 'authenticated'
             if transition.targetName isnt 'index'
                 @session.set 'previousTransition', transition
-
-            promise = @session.get 'checkSessionPromise.promise'
-
-            if promise
-                promise.then (user) =>
-                    previous = @session.get 'previousTransition'
-                    target = previous?.targetName or if not user then 'about' else 'dashboard'
-
-                    if previous then previous.retry() else @transitionTo target
-
-                promise.catch =>
-                    @transitionTo 'about'
-
-            promise
+        else
+            @transitionTo 'dashboard'
+        return
 
     watchForLogout: Ember.observer 'session.authenticated', ->
         if not @session.get 'authenticated'
             @transitionTo 'about'
+        else
+            @transitionTo 'dashboard'
 
 `export default ApplicationRoute`

@@ -5,10 +5,10 @@
 Ember.MODEL_FACTORY_INJECTIONS = true
 
 App = Ember.Application.extend {
-    modulePrefix: 'firebase-chat'
+    modulePrefix: 'chat'
     Resolver: Resolver
 }
 
-loadInitializers App, 'firebase-chat'
+loadInitializers App, 'chat'
 
 `export default App`

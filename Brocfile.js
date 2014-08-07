@@ -11,9 +11,9 @@ app.import('vendor/lodash/dist/lodash.js');
 app.import('vendor/bootstrap/dist/js/bootstrap.js');
 app.import('vendor/bootstrap/dist/css/bootstrap.css');
 
-app.import('vendor/firebase/firebase-debug.js');
+app.import('vendor/parse-js-sdk/lib/parse.js');
 
-app.import('vendor/emberfire/dist/emberfire.js');
+app.import('vendor/jquery.cookie/jquery.cookie.js');
 
 var fonts = pickFiles('vendor/bootstrap/dist/fonts', {
     srcDir: '/',

@@ -1,8 +1,5 @@
-Room = DS.Model.extend
-    name: DS.attr()
-    title: DS.attr()
+`import BaseModel from './base'`
 
-    messages: DS.hasMany 'message', async: true
-    organization: DS.belongsTo 'organization'
+Room = BaseModel.extend {}
 
 `export default Room`

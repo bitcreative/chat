@@ -1,8 +1,5 @@
-Message = DS.Model.extend
-    user: DS.belongsTo 'user'
-    room: DS.belongsTo 'room'
+`import BaseModel from './base'`
 
-    text: DS.attr()
-    timestamp: DS.attr()
+Message = BaseModel.extend {}
 
 `export default Message`

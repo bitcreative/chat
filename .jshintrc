@@ -7,7 +7,8 @@
         "FirebaseChatENV": true,
         "Firebase": true,
         "FirebaseSimpleLogin": true,
-        "_": true
+        "_": true,
+        "Parse": true
     },
     "browser": true,
     "boss": true,

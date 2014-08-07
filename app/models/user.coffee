@@ -1,9 +1,11 @@
-User = DS.Model.extend
-    firstName: DS.attr()
-    lastName: DS.attr()
-    email: DS.attr()
+`import BaseModel from './base'`
 
-    organization: DS.belongsTo 'organization'
-    messages: DS.hasMany 'messages', async: true
+User = BaseModel.extend
+    username: null
+    email: null
+
+    isOwner: null
+
+    organization: null
 
 `export default User`

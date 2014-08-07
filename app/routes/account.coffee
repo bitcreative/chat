@@ -1,5 +1,5 @@
 AccountRoute = Ember.Route.extend
     model: ->
-        @store.find 'user', @session.get 'user.id'
+        @session.get 'user'
 
 `export default AccountRoute`
