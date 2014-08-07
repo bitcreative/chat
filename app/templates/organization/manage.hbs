@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-sm-12">
+        <h3>
+            Manage Organization
+
+            <small>{{model.name}}</small>
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        {{#each owner in owners}}
+            {{owner.username}}
+        {{/each}}
+    </div>
+</div>

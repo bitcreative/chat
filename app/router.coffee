@@ -10,6 +10,9 @@ Router.map ->
     @route 'account'
     @route 'register'
 
+    @resource 'organization', ->
+        @route 'manage'
+
     @resource 'room', { path: 'room' }, ->
         @route 'detail', { path: ':room_id' }
 

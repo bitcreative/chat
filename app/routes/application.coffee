@@ -10,8 +10,7 @@ ApplicationRoute = Ember.Route.extend
         if not @session.get 'authenticated'
             if transition.targetName isnt 'index'
                 @session.set 'previousTransition', transition
-        else
-            @transitionTo 'dashboard'
+                @transitionTo 'about'
         return
 
     watchForLogout: Ember.observer 'session.authenticated', ->
