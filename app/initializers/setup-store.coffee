@@ -13,6 +13,7 @@ SessionInitializer = {
         app.inject 'component', 'store', 'store:application'
         app.inject 'object', 'store', 'store:application'
         app.inject 'service', 'store', 'store:application'
+        app.inject 'model', 'store', 'store:application'
 
         store = container.lookup 'store:application'
 

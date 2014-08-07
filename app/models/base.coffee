@@ -23,8 +23,18 @@ ModelStore = Ember.Object.extend
     find: (type, id) ->
         cache = @get '_cache'
         if cache[type]?[id]
-            return resolveObject(cache[type][id])
-        new Error 'LOL THERE IS NO INTERNET LOADING, SUCKER'
+            return resolveObject cache[type][id]
+
+        Organization = Parse.Object.extend 'Organization'
+        query = new Parse.Query Organization
+
+        PromiseObject.create
+            promise: new Ember.RSVP.Promise (resolve, reject) =>
+                query.get id,
+                    success: =>
+                        Array.prototype.splice.call arguments, 0, 0, type
+                        resolve @createFromParse.apply(@, arguments)
+                    error: reject
 
     _storeType: (type) ->
         types = @get '_types'
