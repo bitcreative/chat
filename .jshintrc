@@ -33,5 +33,8 @@
     "white": false,
     "eqnull": true,
     "esnext": true,
-    "unused": true
+    "unused": true,
+    "expr": true,
+    "shadow": true,
+    "multistr": true
 }
