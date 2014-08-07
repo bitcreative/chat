@@ -1,4 +1,4 @@
-`import { PromiseArray, PromiseObject } from '../utils/promises';`
+`import { PromiseArray, PromiseObject } from '../utils/promises'`
 
 resolveObject = (obj) ->
     PromiseObject.create
@@ -11,7 +11,10 @@ ModelStore = Ember.Object.extend
     createRecord: (type, data, parse) ->
         @_storeType type
         modelClass  = @container.lookupFactory "model:#{type}"
-        model = modelClass.create data
+
+        newData = @_removeRelations modelClass, data
+
+        model = modelClass.create newData
 
         model.set 'parse', parse
         model.set '_properties', Ember.keys data
@@ -59,7 +62,7 @@ ModelStore = Ember.Object.extend
     _loadRelations: (record) ->
         relations = record.get 'relations'
         record._properties.forEach (prop) =>
-            value = record.get prop
+            value = record.get('parse.attributes')[prop]
 
             if value instanceof Parse.Relation
                 relation = record.parse.relation(value.key)
@@ -72,6 +75,11 @@ ModelStore = Ember.Object.extend
                 id = value.id
                 record.set prop, @find(prop, id)
 
+
+    _removeRelations: (modelClass, data) ->
+        relations = modelClass.proto().relations
+        dataKeys = Ember.keys data
+        Ember.getProperties data, _.difference(dataKeys, relations)
 
     _storeType: (type) ->
         types = @get '_types'
@@ -94,4 +102,4 @@ BaseModel = Ember.Object.extend
 
 
 `export var Store = ModelStore`;
-`export default BaseModel;`
+`export default BaseModel`
