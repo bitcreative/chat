@@ -5,6 +5,7 @@ AccountController = Ember.ObjectController.extend
     changePasswordNew: ''
     changePasswordRepeat: ''
     passwordUpdateSucceeded: false
+    saved: false
 
     passwordMatchWarning: Ember.computed 'changePasswordNew', 'changePasswordRepeat', ->
         password = @get 'changePasswordNew'
@@ -49,5 +50,10 @@ AccountController = Ember.ObjectController.extend
 
                     .catch =>
                         @set 'passwordUpdateFailed', true
+
+        saveUser: ->
+            @set 'saved', false
+            @get('model').save().then =>
+                @set 'saved', true
 
 `export default AccountController`

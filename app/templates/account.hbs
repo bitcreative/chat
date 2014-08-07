@@ -6,6 +6,10 @@
             </div>
             <div class="panel-body">
                 <form class="form-horizontal" {{action "changePassword" on="submit"}}>
+                    {{#if saved}}
+                        <div class="alert alert-success" role="alert">Information saved!</div>
+                    {{/if}}
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Username</label>
 
@@ -13,6 +17,22 @@
                             <p class="form-control-static">{{email}}</p>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Name</label>
+
+                        <div class="col-sm-3">
+                            {{input type="text" class="form-control" placeholder="first" value=firstName}}
+                        </div>
+                        <div class="col-sm-3">
+                            {{input type="text" class="form-control" placeholder="last" value=lastName}}
+                        </div>
+                        <div class="col-sm-1">
+                            <button class="btn btn-default" {{action "saveUser"}}>
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
                             <div {{bind-attr class=":alert alertType"}} role="alert">
