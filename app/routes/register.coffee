@@ -5,7 +5,7 @@ RegisterRoute = Ember.Route.extend
                 .then (sessionUser) =>
                     organization = @store.createRecord 'organization', { name: orgName, owner: sessionUser.email }
                     organization.save().then =>
-                        userModel = @store.createRecord 'user', { email, organization, firstName: '', lastName: '' }
+                        userModel = @store.createRecord 'user', { id: sessionUser.id, email, organization, firstName: '', lastName: '' }
                         userModel.save().then =>
                             @transitionTo 'dashboard'
 
