@@ -1,6 +1,8 @@
 `import BaseModel from './base'`
 
 Organization = BaseModel.extend
+    relations: ['users']
+
     name: null
     users: null
 
