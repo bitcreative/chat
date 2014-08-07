@@ -1,11 +1,9 @@
-unprotectedRoutes = ['register']
-
 ApplicationRoute = Ember.Route.extend
     actions:
         willTransition: (transition) ->
             if not @session.get 'authenticated'
                 @session.set 'previousTransition', transition
-                if transition.targetName not in unprotectedRoutes
+                if transition.targetName not in ['register']
                     @transitionTo 'about'
 
     beforeModel: (transition) ->

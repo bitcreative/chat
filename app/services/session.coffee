@@ -35,7 +35,7 @@ Session = Ember.Object.extend
 
     register: (email, password) ->
         @authPromise ?= Ember.RSVP.defer()
-        @firebaseAuth.createUser email, password, (error, user) =>
+        @firebaseAuth.createUser email, password, (error) =>
             if error
                 @clearPromise().reject error
 

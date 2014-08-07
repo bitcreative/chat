@@ -27,12 +27,12 @@ NavBarComponent = Ember.Component.extend
             password = @get 'loginPassword'
 
             @session.login username, password
-                .then (user) =>
+                .then =>
                     @set 'loginUsername', ''
                     @set 'loginPassword', ''
                     @sendAction 'loggedIn'
 
-                .catch (error) =>
+                .catch =>
                     @set 'loginError', true
             return
 
