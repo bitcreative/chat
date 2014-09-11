@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>FirebaseChat Tests</title>
+    <title>Chat Tests</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{BASE_TAG}}
 
     <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/firebase-chat.css">
-    <link rel="stylesheet" href="assets/qunit.css">
+    <link rel="stylesheet" href="assets/chat.css">
+    <link rel="stylesheet" href="assets/test-support.css">
     <style>
       #ember-testing-container {
         position: absolute;
@@ -34,16 +34,15 @@
     <div id="qunit-fixture"></div>
 
     <script>
-      window.FirebaseChatENV = {{ENV}};
-      window.EmberENV = window.FirebaseChatENV.EmberENV;
+      window.ChatENV = {{ENV}};
+      window.EmberENV = window.ChatENV.EmberENV;
     </script>
-    <script src="assets/qunit.js"></script>
-    <script src="assets/qunit-notifications.js"></script>
+    <script src="assets/test-support.js"></script>
     <script src="assets/vendor.js"></script>
-    <script src="assets/firebase-chat.js"></script>
+    <script src="assets/chat.js"></script>
     <script src="testem.js"></script>
     <script>
-      require('firebase-chat/tests/test-helper');
+      require('chat/tests/test-helper');
     </script>
     <script src="assets/test-loader.js"></script>
   </body>

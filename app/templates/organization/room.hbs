@@ -1,0 +1,15 @@
+<div class="heading">
+    <span class="title">
+        {{model.title}}
+    </span>
+</div>
+
+<div class="messages">
+    {{#each message in messages}}
+        <div>{{message}}</div>
+    {{/each}}
+</div>
+
+<div class="message-input">
+    {{textarea value=message}}
+</div>

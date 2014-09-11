@@ -4,8 +4,6 @@ SessionInitializer = {
     name: 'setup-session'
 
     initialize: (container, app) ->
-        Parse.initialize app.PARSE_APP_KEY, app.PARSE_JS_KEY
-
         app.register 'service:session', SessionService,
             singleton: true
             initialize: true

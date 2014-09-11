@@ -13,21 +13,21 @@ module.exports = function (environment) {
         },
 
         APP: {
-            PARSE_APP_KEY: 'ESxAGpPrRUn1CuDXtZUgXHi5CN0tshaovooZt1MX',
-            PARSE_JS_KEY: 'nl0RCvnoCz8VoUrqtmkCmQ16HbkNkFDSDLJ4LTvr'
+            // Here you can pass flags/options to your application instance
+            // when it is created
         }
     };
 
     if (environment === 'development') {
-        // LOG_MODULE_RESOLVER is needed for pre-1.6.0
-        ENV.LOG_MODULE_RESOLVER = true;
-
-        ENV.APP.LOG_RESOLVER = true;
+        // ENV.APP.LOG_RESOLVER = true;
         ENV.APP.LOG_ACTIVE_GENERATION = true;
-        ENV.APP.LOG_MODULE_RESOLVER = true;
         // ENV.APP.LOG_TRANSITIONS = true;
         // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
         ENV.APP.LOG_VIEW_LOOKUPS = true;
+    }
+
+    if (environment === 'test') {
+        ENV.baseURL = '/'; // Testem prefers this...
     }
 
     if (environment === 'production') {

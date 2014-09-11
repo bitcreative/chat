@@ -1,0 +1,13 @@
+<div class="organization-menu">
+    <div class="rooms">
+        {{#each room in rooms}}
+            <div class="room clickable">
+                {{room.title}}
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<div class="organization-content">
+    {{outlet}}
+</div>

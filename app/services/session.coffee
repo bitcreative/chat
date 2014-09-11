@@ -1,64 +1,47 @@
-`import UserModel from '../models/user';`
+`import Ember from 'ember';`
 
-Session = Ember.Object.extend
-    firebase: null
-    firebaseAuth: null
+loginWithToken = (token) ->
+    Ember.$.post '/api/auth/login/', {token}
 
+SessionService = Ember.Object.extend
     user: null
-    authPromise: null
-
-    checkSessionPromise: null
 
     authenticated: Ember.computed 'user', ->
         !!@get 'user'
 
-    setUserFromSession: Ember.on 'init', ->
-        currentUser = Parse.User.current()
-        if currentUser
-            @set 'user', @store.createFromParse 'user', currentUser
+    setAuthorizationHeader: Ember.on 'init', () ->
+        token = Ember.$.cookie 'sessionToken'
+        if token
+            Ember.$.ajaxSetup
+                headers:
+                    Authorization: "Token #{token}"
 
-    login: (username, password) ->
-         new Ember.RSVP.Promise (resolve, reject) =>
-            Parse.User.logIn username, password,
-                success: (user) =>
-                    @handleLogin user
-                    resolve user
-                error: (user, error) ->
-                    reject user, error
-            return
+    authenticateWithToken: () ->
+        token = Ember.$.cookie 'sessionToken'
+        new Ember.RSVP.Promise (resolve) =>
+            if not token
+                resolve false
 
-    handleLogin: (user) ->
-        sessionToken = user._sessionToken
-        $.cookie 'sessionToken', sessionToken
+            loginWithToken(token).then (data) =>
+                @handleLogin data
+                resolve data
 
-        @store.createFromParse 'user', user
+    handleLogin: (data) ->
+        sessionToken = data.token
+        Ember.$.cookie 'sessionToken', sessionToken
+
+        user = @store.createRecord 'user', data.user
+        @set 'user', user
 
     register: (username, password, email) ->
-        user = new Parse.User()
-        user.set('username', username)
-        user.set('password', password)
-        user.set('email', email);
+        user.set 'username', username
+        user.set 'password', password
+        user.set 'email', email ;
 
         new Ember.RSVP.Promise (resolve, reject) =>
-            user.signUp null,
-                success: (user) =>
-                    @handleLogin user
-                    resolve user
-                error: (user, error) ->
-                    reject user, error
-            return
 
     logout: ->
         @set 'user', null
 
-        Parse.User.logOut()
 
-    changePassword: (oldPassword, newPassword) -> new Ember.RSVP.Promise (resolve, reject) =>
-        @firebaseAuth.changePassword @user?.email, oldPassword, newPassword, (error) ->
-            if error
-                reject error
-            else
-                resolve()
-
-
-`export default Session`
+`export default SessionService`

@@ -4,8 +4,10 @@ NavBarComponent = Ember.Component.extend
     authenticatedBinding: 'session.authenticated'
 
     loginError: false
-    passwordError: null
-    usernameError: null
+
+    login:
+        username: null
+        password: null
 
     hasFeedback: Ember.computed 'passwordWarning', 'passwordError', ->
         @get('passwordWarning') or @get('passwordError')
@@ -22,19 +24,15 @@ NavBarComponent = Ember.Component.extend
             @set 'modalOpen', false
 
         login: ->
-            @set 'loginError', false
-            username = @get 'loginUsername'
-            password = @get 'loginPassword'
+            login = @get 'login'
 
-            @session.login username, password
-                .then =>
-                    @set 'loginUsername', ''
-                    @set 'loginPassword', ''
-                    @sendAction 'loggedIn'
+            if not login.username or not login.password
+                @set 'loginError', true
+                return
 
-                .catch =>
-                    @set 'loginError', true
-            return
+            @triggerAction
+                action: 'login'
+                actionContext: [login.username, login.password]
 
         logout: ->
             @session.logout()

@@ -1,5 +1,5 @@
-`import BaseModel from './base'`
+`import DS from 'ember-data';`
 
-Message = BaseModel.extend {}
+Message = DS.Model.extend {}
 
 `export default Message`

@@ -1,13 +1,11 @@
-`import BaseModel from './base'`
+`import DS from 'ember-data';`
 
-User = BaseModel.extend
-    relations: ['organization']
+User = DS.Model.extend
+    username: DS.attr()
+    email: DS.attr()
 
-    username: null
-    email: null
+    first_name: DS.attr()
+    last_name: DS.attr()
 
-    isOwner: null
-
-    organization: null
 
 `export default User`

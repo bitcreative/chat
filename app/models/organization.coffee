@@ -1,12 +1,12 @@
-`import BaseModel from './base'`
+`import DS from 'ember-data';`
 
-Organization = BaseModel.extend
-    relations: ['users']
+Organization = DS.Model.extend
+    name: DS.attr()
 
-    name: null
-    users: null
+    users: DS.hasMany 'user', async: true
+    rooms: DS.hasMany 'rooms', async: true
 
-    owners: Ember.computed 'users', ->
+    owners: Ember.computed 'users', () ->
         users = @get 'users'
         users.filterBy? 'isOwner'
 

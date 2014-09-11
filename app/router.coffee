@@ -10,10 +10,12 @@ Router.map ->
     @route 'account'
     @route 'register'
 
-    @resource 'organization', ->
+    @resource 'organization', path: ':organization_id', ->
+        @route 'room', path: ':room_key'
+
         @route 'manage'
 
-    @resource 'room', { path: 'room' }, ->
-        @route 'detail', { path: ':room_id' }
+    @resource 'room', path: 'room', ->
+        @route 'detail', path: ':room_id'
 
 `export default Router`

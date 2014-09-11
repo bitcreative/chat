@@ -1,7 +1,7 @@
 /* global require */
 
-var Application = require('firebase-chat/app')['default'];
-var Router = require('firebase-chat/router')['default'];
+var Application = require('chat/app')['default'];
+var Router = require('chat/router')['default'];
 import Ember from 'ember';
 
 export default function startApp(attrs) {

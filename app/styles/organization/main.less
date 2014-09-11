@@ -1,0 +1,13 @@
+.organization-menu, .organization-content {
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
+.organization-menu {
+    width: @organization-menu-width;
+}
+
+.organization-content {
+    width: ~"calc(100% - @{organization-menu-width})";
+}

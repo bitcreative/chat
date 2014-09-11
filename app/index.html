@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Chat</title>
@@ -9,18 +9,17 @@
 
     {{BASE_TAG}}
 
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/chat.css">
-  </head>
-  <body>
-    <script>
-      window.ChatENV = {{ENV}};
-      window.EmberENV = window.ChatENV.EmberENV;
-    </script>
-    <script src="assets/vendor.js"></script>
-    <script src="assets/chat.js"></script>
-    <script>
-      window.Chat = require('chat/app')['default'].create(ChatENV.APP);
-    </script>
-  </body>
+    <link rel="stylesheet" href="assets/vendor.css" />
+    <link rel="stylesheet" href="assets/chat.css" />
+</head>
+<body>
+<script src="assets/vendor.js"></script>
+<script src="assets/chat.js"></script>
+<script>
+    window.ChatENV = require('chat/config/environment')['default'];
+    window.ENV = window.ChatENV;
+    window.EmberENV = window.ChatENV.EmberENV;
+    window.Chat = require('chat/app')['default'].create(ChatENV.APP);
+</script>
+</body>
 </html>

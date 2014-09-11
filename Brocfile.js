@@ -6,22 +6,23 @@ var mergeTrees = require('broccoli-merge-trees');
 
 var app = new EmberApp();
 
-app.import('vendor/lodash/dist/lodash.js');
+app.import('bower_components/lodash/dist/lodash.js');
 
-app.import('vendor/bootstrap/dist/js/bootstrap.js');
-app.import('vendor/bootstrap/dist/css/bootstrap.css');
+app.import('bower_components/bootstrap/dist/js/bootstrap.js');
+app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 
-app.import('vendor/parse-js-sdk/lib/parse.js');
+app.import('bower_components/jquery.cookie/jquery.cookie.js');
 
-app.import('vendor/jquery.cookie/jquery.cookie.js');
+app.import('bower_components/omnibus/omnibus/static/omnibus/sockjs.js');
+app.import('bower_components/omnibus/omnibus/static/omnibus/omnibus.js');
 
-var fonts = pickFiles('vendor/bootstrap/dist/fonts', {
+var fonts = pickFiles('bower_components/bootstrap/dist/fonts', {
     srcDir: '/',
     files: ['**/*'],
     destDir: '/fonts'
 });
 
-var bootstrapCssMap = pickFiles('vendor/bootstrap/dist/css/', {
+var bootstrapCssMap = pickFiles('bower_components/bootstrap/dist/css/', {
     srcDir: '/',
     files: ['bootstrap.css.map'],
     destDir: '/assets'
