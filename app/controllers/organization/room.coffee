@@ -7,11 +7,9 @@ RoomController = Ember.Controller.extend
             messages = @get 'messages'
             if message
                 @storeMessage message
-                @sendMessageToChannel message
             return
 
     message: null
-    messages: []
 
     establishChannelConnection: Ember.observer 'model', () ->
         model = @get 'model'
@@ -20,31 +18,37 @@ RoomController = Ember.Controller.extend
             channel = @connection.openChannel model.get('key')
             @set 'channel', channel
 
-        @set 'messages', model.get('messages')
-
     attachMessageListener: Ember.observer 'channel', () ->
         channel = @get 'channel'
         channel.on 'message', (event) =>
-            messages = @get 'messages'
-            messages.pushObject event.data.payload.message
+            id = event.data.payload.id
+            @store.find 'message', id
 
     storeMessage: (message) ->
+        sender = @session.get 'user'
+        room = @get 'model'
+
         data =
-            sender: @session.get 'user'
-            room: @get 'model'
+            sender: sender
+            room: room
             text: message
 
         record = @store.createRecord 'message', data
+
+        # get around belongsTo issues
+        record.set '_extra',
+            sender: sender
+            room: room
+
         record.save()
         .then (record) =>
-            console.log 'stored message'
+            @sendMessageToChannel record
 
-    sendMessageToChannel: (message) ->
+    sendMessageToChannel: (record) ->
         channel = @get 'channel'
         channel.send 'message',
-            message: message
+            record.toJSON(includeId: true)
 
-        @messages.pushObject message
         @set 'message', ''
 
 `export default RoomController;`

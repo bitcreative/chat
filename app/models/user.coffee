@@ -7,5 +7,7 @@ User = DS.Model.extend
     first_name: DS.attr()
     last_name: DS.attr()
 
+    messages: DS.hasMany 'message'
+
 
 `export default User`

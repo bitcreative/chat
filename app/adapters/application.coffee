@@ -4,10 +4,10 @@
 ApplicationAdapter = DS.RESTAdapter.extend
     namespace: 'api'
 
-    pathForType: (type) ->
-        main = Ember.String.decamelize(type)
-        if type not in ['organization', 'room', 'message']
-            main += '/'
-        return main
+    buildURL: (type, id, record) ->
+        url = "#{@namespace}/#{type}/"
+        if id
+            url = "#{url}#{id}/"
+        return url
 
 `export default ApplicationAdapter;`
