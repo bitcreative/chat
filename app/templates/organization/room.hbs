@@ -5,11 +5,13 @@
 </div>
 
 <div class="messages">
-    {{#each message in messages}}
-        <div>{{message}}</div>
-    {{/each}}
+    <div class="messages-container">
+        {{#each message in messages}}
+            <div>{{message}}</div>
+        {{/each}}
+    </div>
 </div>
 
 <div class="message-input">
-    {{textarea value=message}}
+    {{textarea class="form-control" value=message}}
 </div>

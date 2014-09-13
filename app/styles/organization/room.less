@@ -27,6 +27,11 @@
 
     .messages {
         height: ~"calc(100% - @{message-input-height} - @{heading-height})";
+
+        padding: @content-padding;
+
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     .message-input {
