@@ -1,3 +1,6 @@
+@heading-height: 50px;
+@message-input-height: 50px + @content-padding;
+
 .rooms {
     .room {
         padding: @content-padding;
@@ -7,13 +10,35 @@
 }
 
 .room-detail {
+    height: 100%;
+
     .heading {
+        height: @heading-height;
         padding: @content-padding;
 
         border: 1px solid #ccc;
 
+        vertical-align: middle;
+
         .title {
             font-size: 20px;
+        }
+    }
+
+    .messages {
+        height: ~"calc(100% - @{message-input-height} - @{heading-height})";
+    }
+
+    .message-input {
+        height: @message-input-height;
+
+        padding: @content-padding;
+
+        textarea {
+            width: 100%;
+            height: 100%;
+
+            resize: none;
         }
     }
 }

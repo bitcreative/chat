@@ -1,8 +1,12 @@
 ApplicationRoute = Ember.Route.extend
     actions:
         login: (username, password) ->
-            @get('torii').open('api', {username, password}).then (data) =>
+            @get('torii').open('api', {username, password})
+            .then (data) =>
                 @session.handleLogin data
+                @transitionTo 'dashboard'
+            .catch (data) =>
+                console.log 'login error'
 
         logout: () ->
 
@@ -14,11 +18,11 @@ ApplicationRoute = Ember.Route.extend
                     @transitionTo 'about'
 
     beforeModel: (transition) ->
-        @session.authenticateWithToken (result) =>
+        @session.authenticateWithToken().then (result) =>
             if not result
                 if transition.targetName isnt 'index'
                     @session.set 'previousTransition', transition
-                    @transitionTo 'about'
+                    @transitionTo 'login'
 
     watchForLogout: Ember.observer 'session.authenticated', ->
         if not @session.get 'authenticated'

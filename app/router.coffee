@@ -9,6 +9,7 @@ Router.map ->
     @route 'dashboard'
     @route 'account'
     @route 'register'
+    @route 'login'
 
     @resource 'organization', path: ':organization_id', ->
         @route 'room', path: ':room_key'

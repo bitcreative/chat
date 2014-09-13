@@ -30,6 +30,9 @@ SessionService = Ember.Object.extend
         sessionToken = data.token
         Ember.$.cookie 'sessionToken', sessionToken
 
+        if @get 'user'
+            return
+
         user = @store.createRecord 'user', data.user
         @set 'user', user
 
