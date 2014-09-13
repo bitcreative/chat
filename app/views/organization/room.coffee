@@ -7,7 +7,7 @@ RoomView = Ember.View.extend
 
     bindKeypress: Ember.on 'didInsertElement', () ->
         @$('textarea').on 'keydown', (event) =>
-            if event.keyCode is ENTER
+            if event.keyCode is ENTER and not event.shiftKey
                 event.preventDefault()
                 controller = @get 'controller'
                 controller.send 'sendMessage'

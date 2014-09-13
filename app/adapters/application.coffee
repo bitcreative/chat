@@ -5,6 +5,9 @@ ApplicationAdapter = DS.RESTAdapter.extend
     namespace: 'api'
 
     pathForType: (type) ->
-        Ember.String.decamelize(type)
+        main = Ember.String.decamelize(type)
+        if type not in ['organization', 'room', 'message']
+            main += '/'
+        return main
 
 `export default ApplicationAdapter;`

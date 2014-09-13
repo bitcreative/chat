@@ -2,10 +2,13 @@
 
 Room = DS.Model.extend
     organization: DS.belongsTo 'organization', async: true
+    roster: DS.hasMany 'user', async: true
+    messages: DS.hasMany 'message', async: true
+
     key: DS.attr()
     title: DS.attr()
     description: DS.attr()
-    roster: DS.hasMany 'user', async: true
+
 
 
 `export default Room;`

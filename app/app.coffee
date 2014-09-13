@@ -4,6 +4,9 @@
 
 Ember.MODEL_FACTORY_INJECTIONS = true
 
+Ember.RSVP.on 'error', (error) ->
+    Ember.Logger.error 'Error:', error
+
 App = Ember.Application.extend {
     modulePrefix: 'chat'
     Resolver: Resolver
